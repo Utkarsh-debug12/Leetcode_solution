@@ -4,6 +4,7 @@
 
 // Return the number of distinct integers in the final array.
 
+// _______________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
  
 
 // Example 1:
@@ -13,6 +14,7 @@
 // Explanation: After including the reverse of each number, the resulting array is [1,13,10,12,31,1,31,1,21,13].
 // The reversed integers that were added to the end of the array are underlined. Note that for the integer 10, after reversing it, it becomes 01 which is just 1.
 // The number of distinct integers in this array is 6 (The numbers 1, 10, 12, 13, 21, and 31).
+
 // Example 2:
 
 // Input: nums = [2,2,2]
@@ -20,11 +22,14 @@
 // Explanation: After including the reverse of each number, the resulting array is [2,2,2,2,2,2].
 // The number of distinct integers in this array is 1 (The number 2).
  
+// _______________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
 
 // Constraints:
 
 // 1 <= nums.length <= 105
 // 1 <= nums[i] <= 106
+// _______________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+
 #include<iostream>
 #include<vector>
 #include<unordered_set>
@@ -37,24 +42,16 @@ class Solution {
 public:
     int countDistinctIntegers(vector<int>& nums) {
         unordered_set<int> distinctNums;
-        
         for (int num : nums) {
-            // Insert the original number
             distinctNums.insert(num);
-            
-            // Reverse the number
             int reversed = 0;
             int temp = num;
             while (temp != 0) {
                 reversed = (reversed * 10) + (temp % 10);
                 temp /= 10;
             }
-            
-            // Insert the reversed number
             distinctNums.insert(reversed);
         }
-        
-        // The size of the set is the number of distinct integers
         return distinctNums.size();
     }
 };
