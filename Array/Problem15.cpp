@@ -35,9 +35,81 @@
 //_______________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________ 
 #include<iostream>
 #include<vector>
+#include<unordered_map>
+#include<unordered_set>
+#include<set>
 using namespace std;
 //_____________________________________________________________________________________________________________________________________________________________________________________________________________
-//Method-1
+//Method-1(brute)
+//_____________________________________________________________________________________________________________________________________________________________________________________________________________
+class Solution {
+public:
+    vector<vector<int>> threeSum(vector<int>& nums) {
+        int n = nums.size();
+        vector<vector<int>> result;
+        set<vector<int>> st;
+        for(int i = 0;i<n;i++){
+            for(int j =i+1;j<n;j++){
+                for(int k = j+1;k<n;k++){
+                    if(nums[i]+nums[j]+nums[k]==0){
+                        if(i==j||i==k||j==k){
+                            continue;
+                        }
+                        else{
+                            vector<int> ar = {nums[i],nums[j],nums[k]};
+                            sort(ar.begin(),ar.end());
+                            st.insert(ar);
+                        }
+                    }
+                }
+            }
+            
+        }
+        for(auto num:st){
+            result.push_back(num);
+        }
+        return result;
+    }
+};
+//_____________________________________________________________________________________________________________________________________________________________________________________________________________
+//Method-2(better)
+//_____________________________________________________________________________________________________________________________________________________________________________________________________________
+class Solution {
+public:
+    vector<vector<int>> threeSum(vector<int>& nums) {
+        int n = nums.size();
+        if (n < 3) {
+            return {};
+        }
+        set<vector<int>> uniqueTriplets;
+        for (int first = 0; first < n - 2; first++) {
+            unordered_set<long long> seenValues;
+            for (int second = first + 1; second < n; second++) {
+                long long thirdValue =
+                    -(long long)(nums[first] + (long long)nums[second]);
+                if (seenValues.find(thirdValue) != seenValues.end()) {
+                    vector<int> triplet = {
+                        nums[first],
+                        nums[second],
+                        (int) thirdValue
+                    };
+ 
+                    sort(triplet.begin(), triplet.end());
+                    uniqueTriplets.insert(triplet);
+                }
+                seenValues.insert(nums[second]);
+            }
+        }
+ 
+        return vector<vector<int>>(
+            uniqueTriplets.begin(),
+            uniqueTriplets.end()
+        );
+    }
+
+};
+//_____________________________________________________________________________________________________________________________________________________________________________________________________________
+//Method-3(optimal)
 //_____________________________________________________________________________________________________________________________________________________________________________________________________________
 class Solution {
 public:
